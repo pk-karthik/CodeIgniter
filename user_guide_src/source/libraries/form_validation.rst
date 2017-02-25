@@ -985,8 +985,9 @@ Rule                      Parameter  Description                                
 **valid_url**             No         Returns FALSE if the form element does not contain a valid URL.
 **valid_email**           No         Returns FALSE if the form element does not contain a valid email address.
 **valid_emails**          No         Returns FALSE if any value provided in a comma separated list is not a valid email.
-**valid_ip**              No         Returns FALSE if the supplied IP is not valid.
+**valid_ip**              Yes        Returns FALSE if the supplied IP address is not valid.
                                      Accepts an optional parameter of 'ipv4' or 'ipv6' to specify an IP format.
+**valid_mac**             No         Returns FALSE if the supplied MAC address is not valid.
 **valid_base64**          No         Returns FALSE if the supplied string contains anything other than valid Base64 characters.
 ========================= ========== ============================================================================================= =======================
 
@@ -1009,7 +1010,6 @@ to use:
 ==================== ========= ==============================================================================================================
 Name                 Parameter Description
 ==================== ========= ==============================================================================================================
-**prep_for_form**    No        DEPRECATED: Converts special characters so that HTML data can be shown in a form field without breaking it.
 **prep_url**         No        Adds "\http://" to URLs if missing.
 **strip_image_tags** No        Strips the HTML from image tags leaving the raw URL.
 **encode_php_tags**  No        Converts PHP tags to entities.

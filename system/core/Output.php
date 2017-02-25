@@ -6,7 +6,7 @@
  *
  * This content is released under the MIT License (MIT)
  *
- * Copyright (c) 2014 - 2016, British Columbia Institute of Technology
+ * Copyright (c) 2014 - 2017, British Columbia Institute of Technology
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
  * @package	CodeIgniter
  * @author	EllisLab Dev Team
  * @copyright	Copyright (c) 2008 - 2014, EllisLab, Inc. (https://ellislab.com/)
- * @copyright	Copyright (c) 2014 - 2016, British Columbia Institute of Technology (http://bcit.ca/)
+ * @copyright	Copyright (c) 2014 - 2017, British Columbia Institute of Technology (http://bcit.ca/)
  * @license	http://opensource.org/licenses/MIT	MIT License
  * @link	https://codeigniter.com
  * @since	Version 1.0.0
@@ -311,11 +311,12 @@ class CI_Output {
 			return NULL;
 		}
 
-		for ($i = 0, $c = count($headers); $i < $c; $i++)
+		// Count backwards, in order to get the last matching header
+		for ($c = count($headers) - 1; $c > -1; $c--)
 		{
-			if (strncasecmp($header, $headers[$i], $l = self::strlen($header)) === 0)
+			if (strncasecmp($header, $headers[$c], $l = self::strlen($header)) === 0)
 			{
-				return trim(self::substr($headers[$i], $l+1));
+				return trim(self::substr($headers[$c], $l+1));
 			}
 		}
 
@@ -553,7 +554,7 @@ class CI_Output {
 	{
 		$CI =& get_instance();
 		$path = $CI->config->item('cache_path');
-		$cache_path = ($path === '') ? APPPATH.'cache/' : $path;
+		$cache_path = ($path === '') ? APPPATH.'cache'.DIRECTORY_SEPARATOR : rtrim($path, '/\\').DIRECTORY_SEPARATOR;
 
 		if ( ! is_dir($cache_path) OR ! is_really_writable($cache_path))
 		{
@@ -835,9 +836,6 @@ class CI_Output {
 	{
 		if (self::$func_override)
 		{
-			// mb_substr($str, $start, null, '8bit') returns an empty
-			// string on PHP 5.3
-			isset($length) OR $length = ($start >= 0 ? self::strlen($str) - $start : -$start);
 			return mb_substr($str, $start, $length, '8bit');
 		}
 
